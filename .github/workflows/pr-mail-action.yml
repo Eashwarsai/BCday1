@@ -1,0 +1,29 @@
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+    pr_trigger_job:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+  
+        - name: Send Email
+          env:
+            SMTP_SERVER: smtp.example.com
+            SMTP_PORT: 587
+            SMTP_USERNAME: eashwarsaiboini@gmail.com
+            SMTP_PASSWORD: eash@123
+            RECIPIENT_EMAIL: eashwarsaiboini2024@gmail.com
+          run: |
+            echo "From: sender@example.com" > message.txt
+            echo "To: $RECIPIENT_EMAIL" >> message.txt
+            echo "Subject: Pull Request Information" >> message.txt
+            echo "" >> message.txt
+            echo "Pull Request Number: ${{ github.event.number }}" >> message.txt
+            echo "Pull Request Title: ${{ github.event.pull_request.title }}" >> message.txt
+            echo "Pull Request Author: ${{ github.event.pull_request.user.login }}" >> message.txt
+            echo "" >> message.txt
+            cat message.txt | msmtp --host=$SMTP_SERVER --port=$SMTP_PORT --auth=on --tls=on --user=$SMTP_USERNAME --password=$SMTP_PASSWORD $RECIPIENT_EMAIL
+  
