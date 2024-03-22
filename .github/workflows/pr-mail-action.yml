@@ -1,18 +1,18 @@
+
 name: pr-mail-action
-run-name: ${{ github.actor }} is learning GitHub Actions
+
 on:
-    pull_request:
-        types: [opened]
+  pull_request:
+    types: [opened]
+
 jobs:
     pr_trigger_job:
-      runs-on: ubuntu-latest
-  
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v2
-  
-        - name: Print PR information
-          run: |
-            echo "Pull Request Number: ${{ github.event.number }}"
-            echo "Pull Request Title: ${{ github.event.pull_request.title }}"
-            echo "Pull Request Author: ${{ github.event.pull_request.user.login }}"
+        runs-on: ubuntu-latest
+        steps:
+        - name: Add Reviewers
+          uses: madrapps/add-reviewers@v1
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            reviewers: Rohith3330
+            re-request-when-approved: true
+            re-request-when-changes-requested: true
