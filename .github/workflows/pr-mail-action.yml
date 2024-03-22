@@ -7,11 +7,7 @@ on:
 
 jobs:
     pr_trigger_job:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            pull-requests: write
-            repository-projects: write      
+        runs-on: ubuntu-latest    
         steps:
         - name: Add Reviewers
           uses: madrapps/add-reviewers@v1
